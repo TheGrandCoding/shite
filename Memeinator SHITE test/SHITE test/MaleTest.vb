@@ -1,7 +1,32 @@
 ﻿Public Class MaleTest
-    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) 
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs)
 
     End Sub
+
+    Public CHECKBOXES As New Dictionary(Of Integer, CheckBoxPair)
+
+    Public SCORES As New Dictionary(Of Integer, Tuple(Of Boolean, Integer)) From
+    {
+        {1, New Tuple(Of Boolean, Integer)(True, 10)},
+        {2, New Tuple(Of Boolean, Integer)(True, 20)},
+        {3, New Tuple(Of Boolean, Integer)(True, 20)},
+        {4, New Tuple(Of Boolean, Integer)(False, 5)},
+        {5, New Tuple(Of Boolean, Integer)(False, 20)},
+        {6, New Tuple(Of Boolean, Integer)(True, 5)},
+        {7, New Tuple(Of Boolean, Integer)(False, 5)},
+        {8, New Tuple(Of Boolean, Integer)(True, 5)},
+        {9, New Tuple(Of Boolean, Integer)(False, 5)},
+        {10, New Tuple(Of Boolean, Integer)(True, 15)},
+        {11, New Tuple(Of Boolean, Integer)(False, 5)},
+        {12, New Tuple(Of Boolean, Integer)(True, 5)},
+        {13, New Tuple(Of Boolean, Integer)(False, 10)},
+        {14, New Tuple(Of Boolean, Integer)(True, 10)},
+        {15, New Tuple(Of Boolean, Integer)(True, 10)}
+    }
+
+    Public Function GetQNumber(cb As CheckBox) As Integer
+        Return Integer.Parse(cb.Name.Replace("CBQ", "").Replace("yes", "").Replace("no", ""))
+    End Function
 
     Private Sub CmdClose_Click(sender As Object, e As EventArgs) Handles CmdClose.Click
         Dim confirm As String
@@ -13,309 +38,68 @@
     End Sub
 
     Private Sub Test_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        For Each control In Me.Controls
+            If TypeOf control Is CheckBox Then
+                Dim cb = DirectCast(control, CheckBox)
+                AddHandler cb.CheckedChanged, AddressOf CB_CheckedChanged
+                Dim cbPair As CheckBoxPair = Nothing
+                If CHECKBOXES.TryGetValue(GetQNumber(cb), cbPair) Then
+                    cbPair.Number = GetQNumber(cb)
+                    If cb.Name.Contains("yes") Then
+                        cbPair.Yes = cb
+                    Else
+                        cbPair.No = cb
+                    End If
+                Else
+                    If cb.Name.Contains("yes") Then
+                        cbPair = New CheckBoxPair(cb, Nothing)
+                    Else
+                        cbPair = New CheckBoxPair(Nothing, cb)
+                    End If
+                    cbPair.Number = GetQNumber(cb)
+                    CHECKBOXES.Add(GetQNumber(cb), cbPair)
+                End If
+            End If
+        Next
     End Sub
 
-    Private Sub CBQ1yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ1yes.CheckedChanged
-        If CBQ1no.CheckState = CheckState.Checked Then
-            CBQ1no.CheckState = CheckState.Unchecked
+    Private Sub CB_CheckedChanged(sender As Object, e As EventArgs)
+        Dim number = GetQNumber(sender)
+        Dim cbPair = CHECKBOXES(number)
+        Dim cb = DirectCast(sender, CheckBox)
+        If Not cb.Checked Then
+            Return
         End If
-    End Sub
-
-    Private Sub CBQ1no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ1no.CheckedChanged
-        If CBQ1yes.CheckState = CheckState.Checked Then
-            CBQ1yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ2yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ2yes.CheckedChanged
-        If CBQ2no.CheckState = CheckState.Checked Then
-            CBQ2no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ2no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ2no.CheckedChanged
-        If CBQ2yes.CheckState = CheckState.Checked Then
-            CBQ2yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ3yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ3yes.CheckedChanged
-        If CBQ3no.CheckState = CheckState.Checked Then
-            CBQ3no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ3no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ3no.CheckedChanged
-        If CBQ3yes.CheckState = CheckState.Checked Then
-            CBQ3yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ4yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ4yes.CheckedChanged
-        If CBQ4no.CheckState = CheckState.Checked Then
-            CBQ4no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ4no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ4no.CheckedChanged
-        If CBQ4yes.CheckState = CheckState.Checked Then
-            CBQ4yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ5yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ5yes.CheckedChanged
-        If CBQ5no.CheckState = CheckState.Checked Then
-            CBQ5no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ5no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ5no.CheckedChanged
-        If CBQ5yes.CheckState = CheckState.Checked Then
-            CBQ5yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ6yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ6yes.CheckedChanged
-        If CBQ6no.CheckState = CheckState.Checked Then
-            CBQ6no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ6no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ6no.CheckedChanged
-        If CBQ6yes.CheckState = CheckState.Checked Then
-            CBQ6yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ7yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ7yes.CheckedChanged
-        If CBQ7no.CheckState = CheckState.Checked Then
-            CBQ7no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ7no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ7no.CheckedChanged
-        If CBQ7yes.CheckState = CheckState.Checked Then
-            CBQ7yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ8yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ8yes.CheckedChanged
-        If CBQ8no.CheckState = CheckState.Checked Then
-            CBQ8no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ8no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ8no.CheckedChanged
-        If CBQ8yes.CheckState = CheckState.Checked Then
-            CBQ8yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ9yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ9yes.CheckedChanged
-        If CBQ9no.CheckState = CheckState.Checked Then
-            CBQ9no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ9no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ9no.CheckedChanged
-        If CBQ9yes.CheckState = CheckState.Checked Then
-            CBQ9yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ10yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ10yes.CheckedChanged
-        If CBQ10no.CheckState = CheckState.Checked Then
-            CBQ10no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ10no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ10no.CheckedChanged
-        If CBQ10yes.CheckState = CheckState.Checked Then
-            CBQ10yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ11yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ11yes.CheckedChanged
-        If CBQ11no.CheckState = CheckState.Checked Then
-            CBQ11no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ11no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ11no.CheckedChanged
-        If CBQ11yes.CheckState = CheckState.Checked Then
-            CBQ11yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ12yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ12yes.CheckedChanged
-        If CBQ12no.CheckState = CheckState.Checked Then
-            CBQ12no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ12no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ12no.CheckedChanged
-        If CBQ12yes.CheckState = CheckState.Checked Then
-            CBQ12yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ13yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ13yes.CheckedChanged
-        If CBQ13no.CheckState = CheckState.Checked Then
-            CBQ13no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ13no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ13no.CheckedChanged
-        If CBQ13yes.CheckState = CheckState.Checked Then
-            CBQ13yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ14yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ14yes.CheckedChanged
-        If CBQ14no.CheckState = CheckState.Checked Then
-            CBQ14no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ14no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ14no.CheckedChanged
-        If CBQ14yes.CheckState = CheckState.Checked Then
-            CBQ14yes.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ15yes_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ15yes.CheckedChanged
-        If CBQ15no.CheckState = CheckState.Checked Then
-            CBQ15no.CheckState = CheckState.Unchecked
-        End If
-    End Sub
-
-    Private Sub CBQ15no_CheckedChanged(sender As Object, e As EventArgs) Handles CBQ15no.CheckedChanged
-        If CBQ15yes.CheckState = CheckState.Checked Then
-            CBQ15yes.CheckState = CheckState.Unchecked
+        If cbPair.Yes Is sender Then
+            cbPair.No.Checked = Not cbPair.Yes.Checked
+        Else
+            cbPair.Yes.Checked = Not cbPair.No.Checked
         End If
     End Sub
 
     Public Score As Integer = 0
 
     Private Sub CmdCheck_Click_1(sender As Object, e As EventArgs) Handles CmdCheck.Click
-        If CBQ1yes.CheckState = CheckState.Checked Then
-            Score = Score + 10
-        End If
-        If CBQ2yes.CheckState = CheckState.Checked Then
-            Score = Score + 20
-        End If
-        If CBQ3yes.CheckState = CheckState.Checked Then
-            Score = Score = 20
-        End If
-        If CBQ4yes.CheckState = CheckState.Unchecked Then
-            Score = Score = 5
-        End If
-        If CBQ5yes.CheckState = CheckState.Unchecked Then
-            Score = Score = 20
-        End If
-        If CBQ6yes.CheckState = CheckState.Checked Then
-            Score = Score = 5
-        End If
-        If CBQ7yes.CheckState = CheckState.Unchecked Then
-            Score = Score = 5
-        End If
-        If CBQ8yes.CheckState = CheckState.Checked Then
-            Score = Score = 5
-        End If
-        If CBQ9yes.CheckState = CheckState.Unchecked Then
-            Score = Score = 5
-        End If
-        If CBQ10yes.CheckState = CheckState.Checked Then
-            Score = Score = 15
-        End If
-        If CBQ11yes.CheckState = CheckState.Unchecked Then
-            Score = Score = 5
-        End If
-        If CBQ12yes.CheckState = CheckState.Checked Then
-            Score = Score = 5
-        End If
-        If CBQ13yes.CheckState = CheckState.Unchecked Then
-            Score = Score + 10
-        End If
-        If CBQ14yes.CheckState = CheckState.Checked Then
-            Score = Score + 10
-        End If
-        If CBQ15yes.CheckState = CheckState.Checked Then
-            Score = Score + 10
-        End If
+        Score = 0
+        For Each cbPair In CHECKBOXES.Values
+            Dim cb = cbPair.Yes
+            Dim tuple = SCORES(cbPair.Number)
+            If Not (cbPair.No.Checked Or cbPair.Yes.Checked) Then
+                MsgBox("You failed to answer question " + cbPair.Number.ToString())
+                Return
+            End If
+            If tuple.Item1 = cb.Checked Then
+                Score += tuple.Item2
+            End If
+        Next
+
         SHITEmenu.LBLScored.Text = "
 Your previous 
 score in
 the SHITE
 test was:
 " & Score
-
-        If Score > 0 Then
-            If CBQ1yes.Checked Or CBQ1no.Checked Then
-                If CBQ2yes.Checked Or CBQ2no.Checked Then
-                    If CBQ3yes.Checked Or CBQ3no.Checked Then
-                        If CBQ4yes.Checked Or CBQ4no.Checked Then
-                            If CBQ5yes.Checked Or CBQ5no.Checked Then
-                                If CBQ6yes.Checked Or CBQ6no.Checked Then
-                                    If CBQ7yes.Checked Or CBQ7no.Checked Then
-                                        If CBQ8yes.Checked Or CBQ8no.Checked Then
-                                            If CBQ9yes.Checked Or CBQ9no.Checked Then
-                                                If CBQ10yes.Checked Or CBQ10no.Checked Then
-                                                    If CBQ11yes.Checked Or CBQ11no.Checked Then
-                                                        If CBQ12yes.Checked Or CBQ12no.Checked Then
-                                                            If CBQ13yes.Checked Or CBQ13no.Checked Then
-                                                                If CBQ14yes.Checked Or CBQ14no.Checked Then
-                                                                    If CBQ15yes.Checked Or CBQ15no.Checked Then
-                                                                        Results.Show()
-                                                                        Me.Hide()
-                                                                    Else
-                                                                        MsgBox("You didn't answer a question")
-                                                                    End If
-                                                                Else
-                                                                    MsgBox("You didn't answer a question")
-                                                                End If
-                                                            Else
-                                                                MsgBox("You didn't answer a question")
-                                                            End If
-                                                        Else
-                                                            MsgBox("You didn't answer a question")
-                                                        End If
-                                                    Else
-                                                        MsgBox("You didn't answer a question")
-                                                    End If
-                                                Else
-                                                    MsgBox("You didn't answer a question")
-                                                End If
-                                            Else
-                                                MsgBox("You didn't answer a question")
-                                            End If
-                                        Else
-                                            MsgBox("You didn't answer a question")
-                                        End If
-                                    Else
-                                        MsgBox("You didn't answer a question")
-                                    End If
-                                Else
-                                    MsgBox("You didn't answer a question")
-                                End If
-                            Else
-                                MsgBox("You didn't answer a question")
-                            End If
-                        Else
-                            MsgBox("You didn't answer a question")
-                        End If
-                    Else
-                        MsgBox("You didn't answer a question")
-                    End If
-                Else
-                    MsgBox("You didn't answer a question")
-                End If
-            Else
-                MsgBox("You didn't answer a question")
-            End If
-        Else
-            MsgBox("You havent selected any boxes!")
-        End If
+        Results.Show()
+        Me.Hide()
     End Sub
 End Class

@@ -72,6 +72,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckBoxPair.vb" />
     <Compile Include="Results.designer.vb">
       <DependentUpon>Results.vb</DependentUpon>
     </Compile>

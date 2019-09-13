@@ -6,29 +6,13 @@
         Arrow75.Hide()
         Arrow150.Hide()
 
-        If MaleTest.Score < 0 Then
-            MsgBox("1")
+        If MaleTest.Score > 0 Then
             TXTSHITEscore.Text = (MaleTest.Score)
-            If MaleTest.Score < 25 Then
-                MsgBox("2")
-                Arrow0.Show()
-            ElseIf MaleTest.Score > 25 And MaleTest.Score < 75 Then
-                MsgBox("3")
-                Arrow25.Show()
-            ElseIf MaleTest.Score > 75 And MaleTest.Score < 125 Then
-                MsgBox("4")
-                Arrow75.Show()
-            ElseIf MaleTest.Score > 125 And MaleTest.Score < 149 Then
-                MsgBox("5")
-                Arrow125.Show()
-            ElseIf MaleTest.Score = 150 Then
-                MsgBox("")
-                Arrow150.Show()
-            Else
-                MsgBox("Error finding correct arrow")
-                SHITEmenu.Show()
-                Me.Close()
-            End If
+            Arrow0.Visible = MaleTest.Score > 0 And MaleTest.Score < 25
+            Arrow25.Visible = MaleTest.Score > 25 And MaleTest.Score < 75
+            Arrow75.Visible = MaleTest.Score > 75 And MaleTest.Score < 125
+            Arrow125.Visible = MaleTest.Score > 125 And MaleTest.Score < 149
+            Arrow150.Visible = MaleTest.Score > 149
         End If
         If FemaleTest.Score < 0 Then
                 TXTSHITEscore.Text = "youre gay"
