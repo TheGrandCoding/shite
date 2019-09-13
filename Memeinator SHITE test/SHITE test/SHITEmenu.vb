@@ -19,12 +19,8 @@
     End Sub
 
     Private Sub Label1_Click(sender As Object, e As EventArgs) Handles LBLScored.Click
-        If FemaleTest.Score > 0 Then
-            LBLScored.Text = "Your previous score in the SHITE test was: " & FemaleTest.Score
+        If TestForm.Score > 0 Then
+            LBLScored.Text = "Your previous score in the SHITE test was: " & TestForm.Score
         End If
-    End Sub
-
-    Private Sub SHITEmenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
     End Sub
 End Class

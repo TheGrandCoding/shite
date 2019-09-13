@@ -1,12 +1,14 @@
 ﻿Imports System.Data.SqlClient
 Public Class Gender
     Private Sub CMDfemale_Click(sender As Object, e As EventArgs) Handles CMDfemale.Click
-        FemaleTest.Show()
+        TestForm.IS_MALE = False
+        TestForm.Show()
         Me.Hide()
     End Sub
 
     Private Sub CMDmale_Click(sender As Object, e As EventArgs) Handles CMDmale.Click
-        MaleTest.Show()
+        TestForm.IS_MALE = True
+        TestForm.Show()
         Me.Hide()
     End Sub
 

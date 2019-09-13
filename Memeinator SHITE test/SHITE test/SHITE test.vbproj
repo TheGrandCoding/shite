@@ -107,16 +107,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="FemaleTest.Designer.vb">
-      <DependentUpon>FemaleTest.vb</DependentUpon>
+    <Compile Include="TestForm.designer.vb">
+      <DependentUpon>TestForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="FemaleTest.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MaleTest.designer.vb">
-      <DependentUpon>MaleTest.vb</DependentUpon>
-    </Compile>
-    <Compile Include="MaleTest.vb">
+    <Compile Include="TestForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Waht is it.Designer.vb">
@@ -142,11 +136,8 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FemaleTest.resx">
-      <DependentUpon>FemaleTest.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MaleTest.resx">
-      <DependentUpon>MaleTest.vb</DependentUpon>
+    <EmbeddedResource Include="TestForm.resx">
+      <DependentUpon>TestForm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Waht is it.resx">
       <DependentUpon>Waht is it.vb</DependentUpon>
